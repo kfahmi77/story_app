@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import 'app_locale_controller.dart';
 import 'app_localizations.dart';
@@ -14,7 +15,7 @@ Future<void> showLanguageSettingsSheet(BuildContext context) async {
       final sheetL10n = AppLocalizations.of(sheetContext);
 
       Future<void> selectLanguage(String? languageCode) async {
-        Navigator.of(sheetContext).pop();
+        sheetContext.pop();
         await localeController.setLocale(
           languageCode == null ? null : Locale(languageCode),
         );
