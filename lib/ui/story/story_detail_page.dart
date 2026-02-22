@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 import '../../common/app_localizations.dart';
+import '../../common/language_settings_sheet.dart';
 import '../../common/result_state.dart';
 import '../../common/user_friendly_error.dart';
 import '../../data/api/api_service.dart';
@@ -95,6 +96,13 @@ class _StoryDetailPageState extends State<StoryDetailPage> {
           style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
         ),
         backgroundColor: const Color(0xFF4F46E5),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.language_rounded),
+            tooltip: l10n.language,
+            onPressed: () => showLanguageSettingsSheet(context),
+          ),
+        ],
       ),
       body: Center(
         child: Padding(
@@ -151,6 +159,13 @@ class _StoryDetailPageState extends State<StoryDetailPage> {
           pinned: true,
           elevation: 0,
           backgroundColor: const Color(0xFF4F46E5),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.language_rounded),
+              tooltip: l10n.language,
+              onPressed: () => showLanguageSettingsSheet(context),
+            ),
+          ],
           flexibleSpace: FlexibleSpaceBar(
             titlePadding: const EdgeInsets.only(left: 48, bottom: 16),
             title: Text(

@@ -44,6 +44,7 @@ class AppLocalizations {
       'story': 'Story',
       'logout': 'Logout',
       'noStories': 'No stories yet',
+      'beFirstStory': 'Be the first to share a story!',
       'retry': 'Retry',
 
       // Story Detail
@@ -55,7 +56,9 @@ class AppLocalizations {
       'camera': 'Camera',
       'gallery': 'Gallery',
       'description': 'Description',
+      'storyDetails': 'Story Details',
       'writeStory': 'Write your story...',
+      'tapToBrowse': 'Tap to browse',
       'upload': 'Upload',
       'selectImage': 'Please select an image first',
       'enterDescription': 'Please enter a description',
@@ -64,6 +67,12 @@ class AppLocalizations {
 
       // General
       'pageNotFound': 'Page not found',
+      'language': 'Language',
+      'languageSettings': 'Language Settings',
+      'chooseLanguage': 'Choose your preferred language.',
+      'useSystemLanguage': 'Use device language',
+      'languageIndonesian': 'Bahasa Indonesia',
+      'languageEnglish': 'English',
       'errorNoInternet':
           'No internet connection. Check your network and try again.',
       'errorRequestTimeout':
@@ -128,6 +137,7 @@ class AppLocalizations {
       'story': 'Cerita',
       'logout': 'Keluar',
       'noStories': 'Belum ada cerita',
+      'beFirstStory': 'Jadilah yang pertama membagikan cerita!',
       'retry': 'Coba Lagi',
 
       // Story Detail
@@ -139,7 +149,9 @@ class AppLocalizations {
       'camera': 'Kamera',
       'gallery': 'Galeri',
       'description': 'Deskripsi',
+      'storyDetails': 'Detail Cerita',
       'writeStory': 'Tulis cerita Anda...',
+      'tapToBrowse': 'Ketuk untuk memilih',
       'upload': 'Unggah',
       'selectImage': 'Silakan pilih gambar terlebih dahulu',
       'enterDescription': 'Silakan masukkan deskripsi',
@@ -148,6 +160,12 @@ class AppLocalizations {
 
       // General
       'pageNotFound': 'Halaman tidak ditemukan',
+      'language': 'Bahasa',
+      'languageSettings': 'Pengaturan Bahasa',
+      'chooseLanguage': 'Pilih bahasa yang ingin digunakan.',
+      'useSystemLanguage': 'Ikuti bahasa perangkat',
+      'languageIndonesian': 'Bahasa Indonesia',
+      'languageEnglish': 'English',
       'errorNoInternet':
           'Tidak ada koneksi internet. Periksa jaringan Anda lalu coba lagi.',
       'errorRequestTimeout':
@@ -220,6 +238,7 @@ class AppLocalizations {
   String get story => _translate('story');
   String get logout => _translate('logout');
   String get noStories => _translate('noStories');
+  String get beFirstStory => _translate('beFirstStory');
   String get retry => _translate('retry');
 
   // Story Detail
@@ -231,7 +250,9 @@ class AppLocalizations {
   String get camera => _translate('camera');
   String get gallery => _translate('gallery');
   String get description => _translate('description');
+  String get storyDetails => _translate('storyDetails');
   String get writeStory => _translate('writeStory');
+  String get tapToBrowse => _translate('tapToBrowse');
   String get upload => _translate('upload');
   String get selectImage => _translate('selectImage');
   String get enterDescription => _translate('enterDescription');
@@ -240,6 +261,12 @@ class AppLocalizations {
 
   // General
   String get pageNotFound => _translate('pageNotFound');
+  String get language => _translate('language');
+  String get languageSettings => _translate('languageSettings');
+  String get chooseLanguage => _translate('chooseLanguage');
+  String get useSystemLanguage => _translate('useSystemLanguage');
+  String get languageIndonesian => _translate('languageIndonesian');
+  String get languageEnglish => _translate('languageEnglish');
   String get errorNoInternet => _translate('errorNoInternet');
   String get errorRequestTimeout => _translate('errorRequestTimeout');
   String get errorServer => _translate('errorServer');

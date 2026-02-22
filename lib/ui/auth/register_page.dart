@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../common/app_localizations.dart';
+import '../../common/language_settings_sheet.dart';
 import '../../common/result_state.dart';
 import '../../common/user_friendly_error.dart';
 import '../../data/api/api_service.dart';
@@ -100,6 +101,25 @@ class _RegisterPageState extends State<RegisterPage> {
                 ], // Reversed gradient for variance
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
+              ),
+            ),
+          ),
+
+          SafeArea(
+            child: Align(
+              alignment: Alignment.topRight,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 8, right: 12),
+                child: Material(
+                  color: Colors.white.withValues(alpha: 0.18),
+                  shape: const CircleBorder(),
+                  child: IconButton(
+                    icon: const Icon(Icons.language_rounded),
+                    color: Colors.white,
+                    tooltip: l10n.language,
+                    onPressed: () => showLanguageSettingsSheet(context),
+                  ),
+                ),
               ),
             ),
           ),

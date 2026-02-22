@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../common/app_localizations.dart';
+import '../../common/language_settings_sheet.dart';
 import '../../common/user_friendly_error.dart';
 
 import '../../common/result_state.dart';
@@ -178,6 +179,11 @@ class _StoryListPageState extends State<StoryListPage> {
               ),
               actions: [
                 IconButton(
+                  icon: const Icon(Icons.language_rounded),
+                  tooltip: l10n.language,
+                  onPressed: () => showLanguageSettingsSheet(context),
+                ),
+                IconButton(
                   icon: const Icon(Icons.logout_rounded),
                   tooltip: l10n.logout,
                   onPressed: _logout,
@@ -290,7 +296,7 @@ class _StoryListPageState extends State<StoryListPage> {
               ),
               const SizedBox(height: 8),
               Text(
-                "Be the first to share a story!",
+                l10n.beFirstStory,
                 style: GoogleFonts.poppins(
                   fontSize: 14,
                   color: Colors.grey.shade500,

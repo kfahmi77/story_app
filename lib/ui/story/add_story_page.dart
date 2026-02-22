@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../common/app_localizations.dart';
+import '../../common/language_settings_sheet.dart';
 import '../../common/result_state.dart';
 import '../../common/user_friendly_error.dart';
 import '../../data/api/api_service.dart';
@@ -150,6 +151,13 @@ class _AddStoryPageState extends State<AddStoryPage> {
         backgroundColor: const Color(0xFF4F46E5),
         foregroundColor: Colors.white,
         elevation: 0,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.language_rounded),
+            tooltip: l10n.language,
+            onPressed: () => showLanguageSettingsSheet(context),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
@@ -240,7 +248,7 @@ class _AddStoryPageState extends State<AddStoryPage> {
                             ),
                           ),
                           Text(
-                            "Tap to browse",
+                            l10n.tapToBrowse,
                             style: GoogleFonts.poppins(
                               color: Colors.grey.shade400,
                               fontSize: 13,
@@ -298,7 +306,7 @@ class _AddStoryPageState extends State<AddStoryPage> {
 
             // Description Input
             Text(
-              "Story Details",
+              l10n.storyDetails,
               style: GoogleFonts.poppins(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
