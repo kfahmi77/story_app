@@ -1,14 +1,17 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../common/app_flavor.dart';
 import '../../common/app_localizations.dart';
 import '../../common/language_settings_sheet.dart';
 import '../../common/result_state.dart';
 import '../../common/user_friendly_error.dart';
 import '../../data/api/api_service.dart';
+import '../../data/model/location_selection.dart';
 import '../../data/repository/auth_repository.dart';
 
 class AddStoryPage extends StatefulWidget {
@@ -28,6 +31,7 @@ class _AddStoryPageState extends State<AddStoryPage> {
 
   Uint8List? _imageBytes;
   String? _fileName;
+  LocationSelection? _selectedLocation;
   ResultState _state = ResultState.initial;
   String _errorMessage = '';
 
@@ -71,6 +75,27 @@ class _AddStoryPageState extends State<AddStoryPage> {
     }
   }
 
+  Future<void> _pickLocationOnMap() async {
+    if (!AppFlavor.isPaid) return;
+
+    final result = await context.push<LocationSelection>(
+      '/stories/add/location-picker',
+      extra: _selectedLocation,
+    );
+
+    if (result != null && mounted) {
+      setState(() {
+        _selectedLocation = result;
+      });
+    }
+  }
+
+  void _removeLocation() {
+    setState(() {
+      _selectedLocation = null;
+    });
+  }
+
   Future<void> _upload() async {
     final l10n = AppLocalizations.of(context);
 
@@ -108,6 +133,8 @@ class _AddStoryPageState extends State<AddStoryPage> {
         description: _descriptionController.text.trim(),
         photoBytes: _imageBytes!,
         fileName: _fileName ?? 'photo.jpg',
+        lat: AppFlavor.isPaid ? _selectedLocation?.lat : null,
+        lon: AppFlavor.isPaid ? _selectedLocation?.lon : null,
       );
 
       if (mounted) {
@@ -304,6 +331,9 @@ class _AddStoryPageState extends State<AddStoryPage> {
             ),
             const SizedBox(height: 32),
 
+            _buildLocationSection(l10n),
+            const SizedBox(height: 32),
+
             // Description Input
             Text(
               l10n.storyDetails,
@@ -408,6 +438,203 @@ class _AddStoryPageState extends State<AddStoryPage> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildLocationSection(AppLocalizations l10n) {
+    final isPaidVariant = AppFlavor.isPaid;
+    final selectedLocation = _selectedLocation;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: Text(
+                l10n.location,
+                style: GoogleFonts.poppins(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: const Color(0xFF1E293B),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+              decoration: BoxDecoration(
+                color:
+                    (isPaidVariant
+                            ? const Color(0xFF10B981)
+                            : Colors.grey.shade500)
+                        .withValues(alpha: 0.12),
+                borderRadius: BorderRadius.circular(999),
+              ),
+              child: Text(
+                isPaidVariant ? l10n.paidTierLabel : l10n.freeTierLabel,
+                style: GoogleFonts.poppins(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w700,
+                  color: isPaidVariant
+                      ? const Color(0xFF047857)
+                      : Colors.grey.shade700,
+                  letterSpacing: 0.5,
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 6),
+        Text(
+          isPaidVariant ? l10n.locationOptional : l10n.locationPaidOnly,
+          style: GoogleFonts.poppins(fontSize: 13, color: Colors.grey.shade600),
+        ),
+        const SizedBox(height: 12),
+        ElevatedButton.icon(
+          onPressed: isPaidVariant ? _pickLocationOnMap : null,
+          icon: Icon(
+            selectedLocation == null
+                ? Icons.map_outlined
+                : Icons.edit_location_alt_rounded,
+          ),
+          label: Text(
+            selectedLocation == null
+                ? l10n.pickLocationOnMap
+                : l10n.changeLocation,
+          ),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color(0xFFEEF2FF),
+            foregroundColor: const Color(0xFF4F46E5),
+            disabledBackgroundColor: Colors.grey.shade200,
+            disabledForegroundColor: Colors.grey.shade500,
+            elevation: 0,
+          ),
+        ),
+        const SizedBox(height: 12),
+        AnimatedSwitcher(
+          duration: const Duration(milliseconds: 250),
+          switchInCurve: Curves.easeOutCubic,
+          switchOutCurve: Curves.easeInCubic,
+          child: selectedLocation == null
+              ? Container(
+                  key: const ValueKey('no-location'),
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: Colors.grey.shade200),
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade100,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          Icons.location_off_rounded,
+                          color: Colors.grey.shade500,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Text(
+                          l10n.noLocationSelectedYet,
+                          style: GoogleFonts.poppins(
+                            fontSize: 13,
+                            color: Colors.grey.shade600,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              : Container(
+                  key: const ValueKey('selected-location'),
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(
+                      color: const Color(0xFF06B6D4).withValues(alpha: 0.25),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.02),
+                        blurRadius: 10,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: const Color(
+                                0xFF06B6D4,
+                              ).withValues(alpha: 0.12),
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              Icons.location_on_rounded,
+                              color: Color(0xFF0891B2),
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  l10n.selectedLocation,
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w600,
+                                    color: const Color(0xFF1E293B),
+                                  ),
+                                ),
+                                Text(
+                                  '${l10n.locationCoordinates}: ${selectedLocation.coordinateLabel}',
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 12,
+                                    color: Colors.grey.shade600,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          IconButton(
+                            tooltip: l10n.removeLocation,
+                            onPressed: _removeLocation,
+                            icon: const Icon(
+                              Icons.delete_outline_rounded,
+                              color: Colors.redAccent,
+                            ),
+                          ),
+                        ],
+                      ),
+                      if (selectedLocation.addressLabel != null &&
+                          selectedLocation.addressLabel!.trim().isNotEmpty) ...[
+                        const SizedBox(height: 10),
+                        Text(
+                          selectedLocation.addressLabel!,
+                          style: GoogleFonts.poppins(
+                            fontSize: 13,
+                            height: 1.4,
+                            color: Colors.grey.shade700,
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+        ),
+      ],
     );
   }
 }

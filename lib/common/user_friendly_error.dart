@@ -11,6 +11,8 @@ enum ErrorMessageContext {
   storyDetail,
   addStory,
   imagePicker,
+  location,
+  geocoding,
 }
 
 class UserFriendlyError {
@@ -51,6 +53,26 @@ class UserFriendlyError {
       return l10n.errorImagePermissionDenied;
     }
 
+    if (context == ErrorMessageContext.location &&
+        _isLocationPermissionPermanentlyDeniedError(lower)) {
+      return l10n.errorLocationPermissionPermanentlyDenied;
+    }
+
+    if (context == ErrorMessageContext.location &&
+        _isLocationPermissionDeniedError(lower)) {
+      return l10n.errorLocationPermissionDenied;
+    }
+
+    if (context == ErrorMessageContext.location &&
+        _isLocationServiceDisabledError(lower)) {
+      return l10n.errorLocationServiceDisabled;
+    }
+
+    if (context == ErrorMessageContext.geocoding &&
+        _isAddressUnavailable(lower)) {
+      return l10n.errorAddressUnavailable;
+    }
+
     if (_isNotFoundError(lower)) {
       return context == ErrorMessageContext.storyDetail
           ? l10n.errorStoryNotFound
@@ -78,6 +100,10 @@ class UserFriendlyError {
         return l10n.errorUploadStoryFriendly;
       case ErrorMessageContext.imagePicker:
         return l10n.errorPickImageFriendly;
+      case ErrorMessageContext.location:
+        return l10n.errorLocationPermissionDenied;
+      case ErrorMessageContext.geocoding:
+        return l10n.failedLoadAddress;
       case ErrorMessageContext.generic:
         return l10n.errorGenericFriendly;
     }
@@ -124,6 +150,32 @@ class UserFriendlyError {
 
   static bool _isPermissionError(String lower) {
     return lower.contains('permission') && lower.contains('denied');
+  }
+
+  static bool _isLocationPermissionDeniedError(String lower) {
+    return lower.contains('location permission denied') ||
+        lower.contains('permissiondeniedexception') ||
+        (lower.contains('permission') &&
+            lower.contains('location') &&
+            lower.contains('denied'));
+  }
+
+  static bool _isLocationPermissionPermanentlyDeniedError(String lower) {
+    return lower.contains('permission denied forever') ||
+        lower.contains('permanently denied') ||
+        lower.contains('denied forever');
+  }
+
+  static bool _isLocationServiceDisabledError(String lower) {
+    return lower.contains('location services are disabled') ||
+        lower.contains('service disabled') ||
+        lower.contains('gps') && lower.contains('disabled');
+  }
+
+  static bool _isAddressUnavailable(String lower) {
+    return lower.contains('no address') ||
+        lower.contains('placemark') && lower.contains('empty') ||
+        lower.contains('not available');
   }
 
   static bool _isNotFoundError(String lower) {

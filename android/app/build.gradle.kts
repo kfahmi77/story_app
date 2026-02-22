@@ -9,6 +9,7 @@ android {
     namespace = "com.example.story_app"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
+    flavorDimensions += "tier"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -28,6 +29,22 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        resValue("string", "app_name", "Story App")
+    }
+
+    productFlavors {
+        create("free") {
+            dimension = "tier"
+            applicationIdSuffix = ".free"
+            versionNameSuffix = "-free"
+            resValue("string", "app_name", "Story App Free")
+        }
+        create("paid") {
+            dimension = "tier"
+            applicationIdSuffix = ".paid"
+            versionNameSuffix = "-paid"
+            resValue("string", "app_name", "Story App Paid")
+        }
     }
 
     buildTypes {

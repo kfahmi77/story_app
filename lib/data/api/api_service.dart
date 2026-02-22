@@ -5,6 +5,10 @@ import 'package:http/http.dart' as http;
 
 import '../model/story.dart';
 import '../model/user.dart';
+import '../model/response/login_response.dart';
+import '../model/response/mutation_response.dart';
+import '../model/response/stories_response.dart';
+import '../model/response/story_detail_response.dart';
 
 class ApiService {
   static const String _baseUrl = 'https://story-api.dicoding.dev/v1';
@@ -20,11 +24,15 @@ class ApiService {
       body: jsonEncode({'name': name, 'email': email, 'password': password}),
     );
 
-    final body = jsonDecode(response.body) as Map<String, dynamic>;
-    if (body['error'] == true) {
-      throw Exception(body['message'] ?? 'Register failed');
+    final body = MutationResponse.fromJson(
+      jsonDecode(response.body) as Map<String, dynamic>,
+    );
+    if (body.error) {
+      throw Exception(
+        body.message.isNotEmpty ? body.message : 'Register failed',
+      );
     }
-    return body['message'] as String;
+    return body.message;
   }
 
   Future<User> login({required String email, required String password}) async {
@@ -34,11 +42,17 @@ class ApiService {
       body: jsonEncode({'email': email, 'password': password}),
     );
 
-    final body = jsonDecode(response.body) as Map<String, dynamic>;
-    if (body['error'] == true) {
-      throw Exception(body['message'] ?? 'Login failed');
+    final body = LoginResponse.fromJson(
+      jsonDecode(response.body) as Map<String, dynamic>,
+    );
+    if (body.error) {
+      throw Exception(body.message.isNotEmpty ? body.message : 'Login failed');
     }
-    return User.fromJson(body['loginResult'] as Map<String, dynamic>);
+    final loginResult = body.loginResult;
+    if (loginResult == null) {
+      throw Exception('Login failed');
+    }
+    return loginResult;
   }
 
   Future<List<Story>> getAllStories({
@@ -59,13 +73,16 @@ class ApiService {
       headers: {'Authorization': 'Bearer $token'},
     );
 
-    final body = jsonDecode(response.body) as Map<String, dynamic>;
-    if (body['error'] == true) {
-      throw Exception(body['message'] ?? 'Failed to fetch stories');
+    final body = StoriesResponse.fromJson(
+      jsonDecode(response.body) as Map<String, dynamic>,
+    );
+    if (body.error) {
+      throw Exception(
+        body.message.isNotEmpty ? body.message : 'Failed to fetch stories',
+      );
     }
 
-    final list = body['listStory'] as List<dynamic>;
-    return list.map((e) => Story.fromJson(e as Map<String, dynamic>)).toList();
+    return body.listStory;
   }
 
   Future<Story> getStoryDetail({
@@ -77,12 +94,20 @@ class ApiService {
       headers: {'Authorization': 'Bearer $token'},
     );
 
-    final body = jsonDecode(response.body) as Map<String, dynamic>;
-    if (body['error'] == true) {
-      throw Exception(body['message'] ?? 'Failed to fetch story detail');
+    final body = StoryDetailResponse.fromJson(
+      jsonDecode(response.body) as Map<String, dynamic>,
+    );
+    if (body.error) {
+      throw Exception(
+        body.message.isNotEmpty ? body.message : 'Failed to fetch story detail',
+      );
     }
 
-    return Story.fromJson(body['story'] as Map<String, dynamic>);
+    final story = body.story;
+    if (story == null) {
+      throw Exception('Failed to fetch story detail');
+    }
+    return story;
   }
 
   Future<String> addStory({
@@ -90,6 +115,8 @@ class ApiService {
     required String description,
     required Uint8List photoBytes,
     required String fileName,
+    double? lat,
+    double? lon,
   }) async {
     final uri = Uri.parse('$_baseUrl/stories');
     final request = http.MultipartRequest('POST', uri)
@@ -99,13 +126,22 @@ class ApiService {
         http.MultipartFile.fromBytes('photo', photoBytes, filename: fileName),
       );
 
+    if (lat != null && lon != null) {
+      request.fields['lat'] = lat.toString();
+      request.fields['lon'] = lon.toString();
+    }
+
     final streamedResponse = await request.send();
     final response = await http.Response.fromStream(streamedResponse);
-    final body = jsonDecode(response.body) as Map<String, dynamic>;
+    final body = MutationResponse.fromJson(
+      jsonDecode(response.body) as Map<String, dynamic>,
+    );
 
-    if (body['error'] == true) {
-      throw Exception(body['message'] ?? 'Failed to add story');
+    if (body.error) {
+      throw Exception(
+        body.message.isNotEmpty ? body.message : 'Failed to add story',
+      );
     }
-    return body['message'] as String;
+    return body.message;
   }
 }

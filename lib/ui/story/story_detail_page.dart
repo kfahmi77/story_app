@@ -9,6 +9,7 @@ import '../../common/user_friendly_error.dart';
 import '../../data/api/api_service.dart';
 import '../../data/model/story.dart';
 import '../../data/repository/auth_repository.dart';
+import '../widgets/story_location_map_section.dart';
 
 class StoryDetailPage extends StatefulWidget {
   final String storyId;
@@ -185,15 +186,18 @@ class _StoryDetailPageState extends State<StoryDetailPage> {
             background: Stack(
               fit: StackFit.expand,
               children: [
-                Image.network(
-                  story.photoUrl,
-                  fit: BoxFit.cover,
-                  errorBuilder: (_, _, _) => Container(
-                    color: Colors.grey.shade300,
-                    child: const Icon(
-                      Icons.broken_image,
-                      size: 64,
-                      color: Colors.grey,
+                Hero(
+                  tag: 'story-image-${story.id}',
+                  child: Image.network(
+                    story.photoUrl,
+                    fit: BoxFit.cover,
+                    errorBuilder: (_, _, _) => Container(
+                      color: Colors.grey.shade300,
+                      child: const Icon(
+                        Icons.broken_image,
+                        size: 64,
+                        color: Colors.grey,
+                      ),
                     ),
                   ),
                 ),
@@ -307,56 +311,9 @@ class _StoryDetailPageState extends State<StoryDetailPage> {
                     // Location (if any)
                     if (story.lat != null && story.lon != null) ...[
                       const SizedBox(height: 32),
-                      Container(
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF06B6D4).withValues(alpha: 0.1),
-                          borderRadius: BorderRadius.circular(16),
-                          border: Border.all(
-                            color: const Color(
-                              0xFF06B6D4,
-                            ).withValues(alpha: 0.2),
-                          ),
-                        ),
-                        child: Row(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.all(8),
-                              decoration: const BoxDecoration(
-                                color: Color(0xFF06B6D4),
-                                shape: BoxShape.circle,
-                              ),
-                              child: const Icon(
-                                Icons.location_on_rounded,
-                                size: 20,
-                                color: Colors.white,
-                              ),
-                            ),
-                            const SizedBox(width: 16),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Location Pinned',
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                      color: const Color(0xFF0E7490),
-                                    ),
-                                  ),
-                                  Text(
-                                    '${story.lat!.toStringAsFixed(5)}, ${story.lon!.toStringAsFixed(5)}',
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 13,
-                                      color: const Color(0xFF0891B2),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
+                      StoryLocationMapSection(
+                        latitude: story.lat!,
+                        longitude: story.lon!,
                       ),
                     ],
                     const SizedBox(height: 40),

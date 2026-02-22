@@ -38,6 +38,8 @@ class _StoryListPageState extends State<StoryListPage> {
   int _page = 1;
   static const int _pageSize = 10;
   bool _hasMore = true;
+  bool _isRequestInFlight = false;
+  bool _isLoadingMore = false;
 
   @override
   void initState() {
@@ -61,21 +63,36 @@ class _StoryListPageState extends State<StoryListPage> {
     // the pagination loader.
     if (position.pixels < 0) return;
 
-    if (position.extentAfter <= 200 &&
-        _state != ResultState.loading &&
-        _hasMore) {
+    if (position.extentAfter <= 200 && !_isRequestInFlight && _hasMore) {
       _fetchStories();
     }
   }
 
   Future<void> _fetchStories() async {
-    if (_state == ResultState.loading) return;
+    if (_isRequestInFlight) return;
 
-    setState(() => _state = ResultState.loading);
+    final isInitialLoad = _stories.isEmpty;
+
+    setState(() {
+      _isRequestInFlight = true;
+      _isLoadingMore = !isInitialLoad;
+      if (isInitialLoad) {
+        _state = ResultState.loading;
+      }
+    });
 
     try {
       final token = await _authRepo.getToken();
-      if (token == null) return;
+      if (token == null) {
+        if (mounted) {
+          setState(() {
+            _state = ResultState.error;
+            _isRequestInFlight = false;
+            _isLoadingMore = false;
+          });
+        }
+        return;
+      }
 
       final newStories = await _apiService.getAllStories(
         token: token,
@@ -85,10 +102,18 @@ class _StoryListPageState extends State<StoryListPage> {
 
       if (mounted) {
         setState(() {
-          _stories.addAll(newStories);
+          final existingIds = _stories.map((story) => story.id).toSet();
+          final uniqueStories = newStories.where((story) {
+            return existingIds.add(story.id);
+          }).toList();
+
+          _stories.addAll(uniqueStories);
+          _stories.sort((a, b) => b.createdAt.compareTo(a.createdAt));
           _page++;
           _hasMore = newStories.length >= _pageSize;
           _state = ResultState.success;
+          _isRequestInFlight = false;
+          _isLoadingMore = false;
         });
       }
     } catch (e) {
@@ -100,6 +125,8 @@ class _StoryListPageState extends State<StoryListPage> {
             AppLocalizations.of(context),
             context: ErrorMessageContext.storyList,
           );
+          _isRequestInFlight = false;
+          _isLoadingMore = false;
         });
       }
     }
@@ -311,6 +338,7 @@ class _StoryListPageState extends State<StoryListPage> {
     return SliverList(
       delegate: SliverChildBuilderDelegate((context, index) {
         if (index == _stories.length) {
+          if (!_isLoadingMore) return const SizedBox.shrink();
           return const Padding(
             padding: EdgeInsets.all(24.0),
             child: Center(
@@ -329,7 +357,7 @@ class _StoryListPageState extends State<StoryListPage> {
             onTap: () => widget.onStoryTapped(story.id),
           ),
         );
-      }, childCount: _stories.length + (_hasMore ? 1 : 0)),
+      }, childCount: _stories.length + (_isLoadingMore ? 1 : 0)),
     );
   }
 }

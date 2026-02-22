@@ -20,10 +20,7 @@ Future<void> showLanguageSettingsSheet(BuildContext context) async {
         );
       }
 
-      Widget languageOption({
-        required String title,
-        required String? value,
-      }) {
+      Widget languageOption({required String title, required String? value}) {
         final isSelected = selectedLanguageCode == value;
 
         return ListTile(
@@ -48,30 +45,21 @@ Future<void> showLanguageSettingsSheet(BuildContext context) async {
             children: [
               Text(
                 sheetL10n.languageSettings,
-                style: Theme.of(sheetContext).textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.w700,
-                ),
+                style: Theme.of(
+                  sheetContext,
+                ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700),
               ),
               const SizedBox(height: 8),
               Text(
                 sheetL10n.chooseLanguage,
-                style: Theme.of(sheetContext).textTheme.bodyMedium?.copyWith(
-                  color: Colors.grey.shade600,
-                ),
+                style: Theme.of(
+                  sheetContext,
+                ).textTheme.bodyMedium?.copyWith(color: Colors.grey.shade600),
               ),
               const SizedBox(height: 12),
-              languageOption(
-                title: sheetL10n.useSystemLanguage,
-                value: null,
-              ),
-              languageOption(
-                title: sheetL10n.languageIndonesian,
-                value: 'id',
-              ),
-              languageOption(
-                title: sheetL10n.languageEnglish,
-                value: 'en',
-              ),
+              languageOption(title: sheetL10n.useSystemLanguage, value: null),
+              languageOption(title: sheetL10n.languageIndonesian, value: 'id'),
+              languageOption(title: sheetL10n.languageEnglish, value: 'en'),
             ],
           ),
         ),

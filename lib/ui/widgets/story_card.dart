@@ -40,26 +40,29 @@ class StoryCard extends StatelessWidget {
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
-                    Image.network(
-                      story.photoUrl,
-                      fit: BoxFit.cover,
-                      errorBuilder: (_, _, _) => Container(
-                        color: Colors.grey.shade100,
-                        child: Icon(
-                          Icons.broken_image_rounded,
-                          size: 48,
-                          color: Colors.grey.shade400,
-                        ),
-                      ),
-                      loadingBuilder: (_, child, loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Container(
+                    Hero(
+                      tag: 'story-image-${story.id}',
+                      child: Image.network(
+                        story.photoUrl,
+                        fit: BoxFit.cover,
+                        errorBuilder: (_, _, _) => Container(
                           color: Colors.grey.shade100,
-                          child: const Center(
-                            child: CircularProgressIndicator(strokeWidth: 2),
+                          child: Icon(
+                            Icons.broken_image_rounded,
+                            size: 48,
+                            color: Colors.grey.shade400,
                           ),
-                        );
-                      },
+                        ),
+                        loadingBuilder: (_, child, loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Container(
+                            color: Colors.grey.shade100,
+                            child: const Center(
+                              child: CircularProgressIndicator(strokeWidth: 2),
+                            ),
+                          );
+                        },
+                      ),
                     ),
                     // Gradient overlay for better contrast (though we put text below now)
                     // If we wanted text on image, we'd use this. Here just for subtle depth.

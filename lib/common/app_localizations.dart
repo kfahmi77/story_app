@@ -57,6 +57,29 @@ class AppLocalizations {
       'gallery': 'Gallery',
       'description': 'Description',
       'storyDetails': 'Story Details',
+      'location': 'Location',
+      'storyLocation': 'Story Location',
+      'locationPinned': 'Location Pinned',
+      'pickLocationOnMap': 'Pick Location on Map',
+      'changeLocation': 'Change Location',
+      'removeLocation': 'Remove Location',
+      'useCurrentLocation': 'Use Current Location',
+      'freeTierLabel': 'FREE',
+      'paidTierLabel': 'PAID',
+      'selectedLocation': 'Selected Location',
+      'noLocationSelectedYet': 'No location selected yet',
+      'locationOptional': 'Location is optional',
+      'locationPaidOnly':
+          'Location selection is available in the paid version only.',
+      'tapMapToSelectLocation': 'Tap on the map to select a location',
+      'confirmLocation': 'Confirm Location',
+      'locationCoordinates': 'Coordinates',
+      'locationAddress': 'Address',
+      'tapMarkerForAddress': 'Tap marker to view address',
+      'resolvingAddress': 'Loading address...',
+      'addressNotFound': 'Address could not be found.',
+      'failedLoadAddress': 'Failed to load address.',
+      'mapPickerTitle': 'Choose Location',
       'writeStory': 'Write your story...',
       'tapToBrowse': 'Tap to browse',
       'upload': 'Upload',
@@ -77,10 +100,8 @@ class AppLocalizations {
           'No internet connection. Check your network and try again.',
       'errorRequestTimeout':
           'The request took too long. Please try again in a moment.',
-      'errorServer':
-          'Server is having a problem. Please try again later.',
-      'errorSessionExpired':
-          'Your session has expired. Please login again.',
+      'errorServer': 'Server is having a problem. Please try again later.',
+      'errorSessionExpired': 'Your session has expired. Please login again.',
       'errorDataNotFound': 'Data could not be found.',
       'errorStoryNotFound': 'Story not found or no longer available.',
       'errorImageTooLarge':
@@ -91,6 +112,14 @@ class AppLocalizations {
           'This email is already registered. Please use another email.',
       'errorImagePermissionDenied':
           'Permission to access camera/gallery was denied.',
+      'errorLocationPermissionDenied':
+          'Location permission was denied. You can still pick a location manually on the map.',
+      'errorLocationPermissionPermanentlyDenied':
+          'Location permission is permanently denied. Enable it from device settings to use current location.',
+      'errorLocationServiceDisabled':
+          'Location service is disabled. Please turn on GPS/location services.',
+      'errorAddressUnavailable':
+          'Address is unavailable for this location. Coordinates are shown instead.',
       'errorGenericFriendly':
           'Something went wrong. Please try again in a moment.',
       'errorLoginFailedFriendly':
@@ -103,8 +132,7 @@ class AppLocalizations {
           'Story detail could not be loaded. Please try again.',
       'errorUploadStoryFriendly':
           'Story could not be uploaded. Please try again.',
-      'errorPickImageFriendly':
-          'Failed to select image. Please try again.',
+      'errorPickImageFriendly': 'Failed to select image. Please try again.',
     },
     'id': {
       // Auth
@@ -150,6 +178,29 @@ class AppLocalizations {
       'gallery': 'Galeri',
       'description': 'Deskripsi',
       'storyDetails': 'Detail Cerita',
+      'location': 'Lokasi',
+      'storyLocation': 'Lokasi Cerita',
+      'locationPinned': 'Lokasi Ditandai',
+      'pickLocationOnMap': 'Pilih Lokasi di Peta',
+      'changeLocation': 'Ubah Lokasi',
+      'removeLocation': 'Hapus Lokasi',
+      'useCurrentLocation': 'Gunakan Lokasi Saat Ini',
+      'freeTierLabel': 'GRATIS',
+      'paidTierLabel': 'BERBAYAR',
+      'selectedLocation': 'Lokasi Terpilih',
+      'noLocationSelectedYet': 'Belum ada lokasi yang dipilih',
+      'locationOptional': 'Lokasi bersifat opsional',
+      'locationPaidOnly':
+          'Fitur pilih lokasi hanya tersedia di versi berbayar.',
+      'tapMapToSelectLocation': 'Ketuk peta untuk memilih lokasi',
+      'confirmLocation': 'Konfirmasi Lokasi',
+      'locationCoordinates': 'Koordinat',
+      'locationAddress': 'Alamat',
+      'tapMarkerForAddress': 'Ketuk marker untuk melihat alamat',
+      'resolvingAddress': 'Memuat alamat...',
+      'addressNotFound': 'Alamat tidak ditemukan.',
+      'failedLoadAddress': 'Gagal memuat alamat.',
+      'mapPickerTitle': 'Pilih Lokasi',
       'writeStory': 'Tulis cerita Anda...',
       'tapToBrowse': 'Ketuk untuk memilih',
       'upload': 'Unggah',
@@ -170,21 +221,25 @@ class AppLocalizations {
           'Tidak ada koneksi internet. Periksa jaringan Anda lalu coba lagi.',
       'errorRequestTimeout':
           'Permintaan terlalu lama diproses. Silakan coba lagi sebentar lagi.',
-      'errorServer':
-          'Server sedang bermasalah. Silakan coba lagi nanti.',
-      'errorSessionExpired':
-          'Sesi Anda sudah berakhir. Silakan masuk kembali.',
+      'errorServer': 'Server sedang bermasalah. Silakan coba lagi nanti.',
+      'errorSessionExpired': 'Sesi Anda sudah berakhir. Silakan masuk kembali.',
       'errorDataNotFound': 'Data tidak ditemukan.',
-      'errorStoryNotFound':
-          'Cerita tidak ditemukan atau sudah tidak tersedia.',
+      'errorStoryNotFound': 'Cerita tidak ditemukan atau sudah tidak tersedia.',
       'errorImageTooLarge':
           'Ukuran gambar terlalu besar. Pilih gambar yang lebih kecil.',
       'errorInvalidCredentials':
           'Email atau kata sandi salah. Periksa lalu coba lagi.',
       'errorEmailAlreadyRegistered':
           'Email ini sudah terdaftar. Silakan gunakan email lain.',
-      'errorImagePermissionDenied':
-          'Izin akses kamera/galeri ditolak.',
+      'errorImagePermissionDenied': 'Izin akses kamera/galeri ditolak.',
+      'errorLocationPermissionDenied':
+          'Izin lokasi ditolak. Anda tetap bisa memilih lokasi secara manual di peta.',
+      'errorLocationPermissionPermanentlyDenied':
+          'Izin lokasi ditolak permanen. Aktifkan dari pengaturan perangkat untuk memakai lokasi saat ini.',
+      'errorLocationServiceDisabled':
+          'Layanan lokasi/GPS nonaktif. Aktifkan lalu coba lagi.',
+      'errorAddressUnavailable':
+          'Alamat tidak tersedia untuk lokasi ini. Koordinat akan ditampilkan.',
       'errorGenericFriendly':
           'Terjadi kendala. Silakan coba lagi beberapa saat lagi.',
       'errorLoginFailedFriendly':
@@ -197,8 +252,7 @@ class AppLocalizations {
           'Detail cerita belum bisa dimuat. Silakan coba lagi.',
       'errorUploadStoryFriendly':
           'Cerita belum berhasil diunggah. Silakan coba lagi.',
-      'errorPickImageFriendly':
-          'Gagal memilih gambar. Silakan coba lagi.',
+      'errorPickImageFriendly': 'Gagal memilih gambar. Silakan coba lagi.',
     },
   };
 
@@ -251,6 +305,28 @@ class AppLocalizations {
   String get gallery => _translate('gallery');
   String get description => _translate('description');
   String get storyDetails => _translate('storyDetails');
+  String get location => _translate('location');
+  String get storyLocation => _translate('storyLocation');
+  String get locationPinned => _translate('locationPinned');
+  String get pickLocationOnMap => _translate('pickLocationOnMap');
+  String get changeLocation => _translate('changeLocation');
+  String get removeLocation => _translate('removeLocation');
+  String get useCurrentLocation => _translate('useCurrentLocation');
+  String get freeTierLabel => _translate('freeTierLabel');
+  String get paidTierLabel => _translate('paidTierLabel');
+  String get selectedLocation => _translate('selectedLocation');
+  String get noLocationSelectedYet => _translate('noLocationSelectedYet');
+  String get locationOptional => _translate('locationOptional');
+  String get locationPaidOnly => _translate('locationPaidOnly');
+  String get tapMapToSelectLocation => _translate('tapMapToSelectLocation');
+  String get confirmLocation => _translate('confirmLocation');
+  String get locationCoordinates => _translate('locationCoordinates');
+  String get locationAddress => _translate('locationAddress');
+  String get tapMarkerForAddress => _translate('tapMarkerForAddress');
+  String get resolvingAddress => _translate('resolvingAddress');
+  String get addressNotFound => _translate('addressNotFound');
+  String get failedLoadAddress => _translate('failedLoadAddress');
+  String get mapPickerTitle => _translate('mapPickerTitle');
   String get writeStory => _translate('writeStory');
   String get tapToBrowse => _translate('tapToBrowse');
   String get upload => _translate('upload');
@@ -279,16 +355,21 @@ class AppLocalizations {
       _translate('errorEmailAlreadyRegistered');
   String get errorImagePermissionDenied =>
       _translate('errorImagePermissionDenied');
+  String get errorLocationPermissionDenied =>
+      _translate('errorLocationPermissionDenied');
+  String get errorLocationPermissionPermanentlyDenied =>
+      _translate('errorLocationPermissionPermanentlyDenied');
+  String get errorLocationServiceDisabled =>
+      _translate('errorLocationServiceDisabled');
+  String get errorAddressUnavailable => _translate('errorAddressUnavailable');
   String get errorGenericFriendly => _translate('errorGenericFriendly');
   String get errorLoginFailedFriendly => _translate('errorLoginFailedFriendly');
   String get errorRegisterFailedFriendly =>
       _translate('errorRegisterFailedFriendly');
-  String get errorLoadStoriesFriendly =>
-      _translate('errorLoadStoriesFriendly');
+  String get errorLoadStoriesFriendly => _translate('errorLoadStoriesFriendly');
   String get errorLoadStoryDetailFriendly =>
       _translate('errorLoadStoryDetailFriendly');
-  String get errorUploadStoryFriendly =>
-      _translate('errorUploadStoryFriendly');
+  String get errorUploadStoryFriendly => _translate('errorUploadStoryFriendly');
   String get errorPickImageFriendly => _translate('errorPickImageFriendly');
 }
 

@@ -3,10 +3,12 @@ import 'package:go_router/go_router.dart';
 
 import 'app_localizations.dart';
 
+import '../data/model/location_selection.dart';
 import '../data/repository/auth_repository.dart';
 import '../ui/auth/login_page.dart';
 import '../ui/auth/register_page.dart';
 import '../ui/story/add_story_page.dart';
+import '../ui/story/location_picker_page.dart';
 import '../ui/story/story_detail_page.dart';
 import '../ui/story/story_list_page.dart';
 
@@ -51,6 +53,19 @@ GoRouter createRouter({required AuthRepository authRepo}) {
             path: 'add',
             builder: (context, state) =>
                 AddStoryPage(onStoryUploaded: () => context.pop(true)),
+            routes: [
+              GoRoute(
+                path: 'location-picker',
+                builder: (context, state) {
+                  final initialSelection = state.extra;
+                  return LocationPickerPage(
+                    initialSelection: initialSelection is LocationSelection
+                        ? initialSelection
+                        : null,
+                  );
+                },
+              ),
+            ],
           ),
           GoRoute(
             path: ':id',
