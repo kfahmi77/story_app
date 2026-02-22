@@ -283,11 +283,15 @@ class _LoginPageState extends State<LoginPage> {
                             const SizedBox(height: 32),
 
                             // Register Navigate
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                            Wrap(
+                              alignment: WrapAlignment.center,
+                              crossAxisAlignment: WrapCrossAlignment.center,
+                              spacing: 4,
+                              runSpacing: 4,
                               children: [
                                 Text(
                                   l10n.dontHaveAccount,
+                                  textAlign: TextAlign.center,
                                   style: GoogleFonts.poppins(
                                     color: Colors.grey.shade600,
                                   ),

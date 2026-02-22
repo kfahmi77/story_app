@@ -304,11 +304,15 @@ class _RegisterPageState extends State<RegisterPage> {
                             const SizedBox(height: 32),
 
                             // Back to Login
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                            Wrap(
+                              alignment: WrapAlignment.center,
+                              crossAxisAlignment: WrapCrossAlignment.center,
+                              spacing: 4,
+                              runSpacing: 4,
                               children: [
                                 Text(
                                   l10n.alreadyHaveAccount,
+                                  textAlign: TextAlign.center,
                                   style: GoogleFonts.poppins(
                                     color: Colors.grey.shade600,
                                   ),
