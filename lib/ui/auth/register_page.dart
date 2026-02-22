@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../common/app_localizations.dart';
 import '../../common/result_state.dart';
+import '../../common/user_friendly_error.dart';
 import '../../data/api/api_service.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -70,7 +71,11 @@ class _RegisterPageState extends State<RegisterPage> {
       if (mounted) {
         setState(() {
           _state = ResultState.error;
-          _errorMessage = e.toString().replaceFirst('Exception: ', '');
+          _errorMessage = UserFriendlyError.message(
+            e,
+            AppLocalizations.of(context),
+            context: ErrorMessageContext.register,
+          );
         });
       }
     }

@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../common/app_localizations.dart';
 import '../../common/result_state.dart';
+import '../../common/user_friendly_error.dart';
 import '../../data/api/api_service.dart';
 import '../../data/repository/auth_repository.dart';
 
@@ -60,7 +61,11 @@ class _LoginPageState extends State<LoginPage> {
       if (mounted) {
         setState(() {
           _state = ResultState.error;
-          _errorMessage = e.toString().replaceFirst('Exception: ', '');
+          _errorMessage = UserFriendlyError.message(
+            e,
+            AppLocalizations.of(context),
+            context: ErrorMessageContext.login,
+          );
         });
       }
     }

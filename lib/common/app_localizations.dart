@@ -64,6 +64,38 @@ class AppLocalizations {
 
       // General
       'pageNotFound': 'Page not found',
+      'errorNoInternet':
+          'No internet connection. Check your network and try again.',
+      'errorRequestTimeout':
+          'The request took too long. Please try again in a moment.',
+      'errorServer':
+          'Server is having a problem. Please try again later.',
+      'errorSessionExpired':
+          'Your session has expired. Please login again.',
+      'errorDataNotFound': 'Data could not be found.',
+      'errorStoryNotFound': 'Story not found or no longer available.',
+      'errorImageTooLarge':
+          'Image is too large. Please choose a smaller image.',
+      'errorInvalidCredentials':
+          'Email or password is incorrect. Please check and try again.',
+      'errorEmailAlreadyRegistered':
+          'This email is already registered. Please use another email.',
+      'errorImagePermissionDenied':
+          'Permission to access camera/gallery was denied.',
+      'errorGenericFriendly':
+          'Something went wrong. Please try again in a moment.',
+      'errorLoginFailedFriendly':
+          'Login failed. Please check your data and try again.',
+      'errorRegisterFailedFriendly':
+          'Registration failed. Please check your data and try again.',
+      'errorLoadStoriesFriendly':
+          'Stories could not be loaded. Please try again.',
+      'errorLoadStoryDetailFriendly':
+          'Story detail could not be loaded. Please try again.',
+      'errorUploadStoryFriendly':
+          'Story could not be uploaded. Please try again.',
+      'errorPickImageFriendly':
+          'Failed to select image. Please try again.',
     },
     'id': {
       // Auth
@@ -116,6 +148,39 @@ class AppLocalizations {
 
       // General
       'pageNotFound': 'Halaman tidak ditemukan',
+      'errorNoInternet':
+          'Tidak ada koneksi internet. Periksa jaringan Anda lalu coba lagi.',
+      'errorRequestTimeout':
+          'Permintaan terlalu lama diproses. Silakan coba lagi sebentar lagi.',
+      'errorServer':
+          'Server sedang bermasalah. Silakan coba lagi nanti.',
+      'errorSessionExpired':
+          'Sesi Anda sudah berakhir. Silakan masuk kembali.',
+      'errorDataNotFound': 'Data tidak ditemukan.',
+      'errorStoryNotFound':
+          'Cerita tidak ditemukan atau sudah tidak tersedia.',
+      'errorImageTooLarge':
+          'Ukuran gambar terlalu besar. Pilih gambar yang lebih kecil.',
+      'errorInvalidCredentials':
+          'Email atau kata sandi salah. Periksa lalu coba lagi.',
+      'errorEmailAlreadyRegistered':
+          'Email ini sudah terdaftar. Silakan gunakan email lain.',
+      'errorImagePermissionDenied':
+          'Izin akses kamera/galeri ditolak.',
+      'errorGenericFriendly':
+          'Terjadi kendala. Silakan coba lagi beberapa saat lagi.',
+      'errorLoginFailedFriendly':
+          'Gagal masuk. Periksa data Anda lalu coba lagi.',
+      'errorRegisterFailedFriendly':
+          'Pendaftaran gagal. Periksa data Anda lalu coba lagi.',
+      'errorLoadStoriesFriendly':
+          'Daftar cerita belum bisa dimuat. Silakan coba lagi.',
+      'errorLoadStoryDetailFriendly':
+          'Detail cerita belum bisa dimuat. Silakan coba lagi.',
+      'errorUploadStoryFriendly':
+          'Cerita belum berhasil diunggah. Silakan coba lagi.',
+      'errorPickImageFriendly':
+          'Gagal memilih gambar. Silakan coba lagi.',
     },
   };
 
@@ -175,6 +240,29 @@ class AppLocalizations {
 
   // General
   String get pageNotFound => _translate('pageNotFound');
+  String get errorNoInternet => _translate('errorNoInternet');
+  String get errorRequestTimeout => _translate('errorRequestTimeout');
+  String get errorServer => _translate('errorServer');
+  String get errorSessionExpired => _translate('errorSessionExpired');
+  String get errorDataNotFound => _translate('errorDataNotFound');
+  String get errorStoryNotFound => _translate('errorStoryNotFound');
+  String get errorImageTooLarge => _translate('errorImageTooLarge');
+  String get errorInvalidCredentials => _translate('errorInvalidCredentials');
+  String get errorEmailAlreadyRegistered =>
+      _translate('errorEmailAlreadyRegistered');
+  String get errorImagePermissionDenied =>
+      _translate('errorImagePermissionDenied');
+  String get errorGenericFriendly => _translate('errorGenericFriendly');
+  String get errorLoginFailedFriendly => _translate('errorLoginFailedFriendly');
+  String get errorRegisterFailedFriendly =>
+      _translate('errorRegisterFailedFriendly');
+  String get errorLoadStoriesFriendly =>
+      _translate('errorLoadStoriesFriendly');
+  String get errorLoadStoryDetailFriendly =>
+      _translate('errorLoadStoryDetailFriendly');
+  String get errorUploadStoryFriendly =>
+      _translate('errorUploadStoryFriendly');
+  String get errorPickImageFriendly => _translate('errorPickImageFriendly');
 }
 
 class _AppLocalizationsDelegate

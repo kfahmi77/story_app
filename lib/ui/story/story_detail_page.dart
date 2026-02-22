@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 
 import '../../common/app_localizations.dart';
 import '../../common/result_state.dart';
+import '../../common/user_friendly_error.dart';
 import '../../data/api/api_service.dart';
 import '../../data/model/story.dart';
 import '../../data/repository/auth_repository.dart';
@@ -53,7 +54,11 @@ class _StoryDetailPageState extends State<StoryDetailPage> {
       if (mounted) {
         setState(() {
           _state = ResultState.error;
-          _errorMessage = e.toString().replaceFirst('Exception: ', '');
+          _errorMessage = UserFriendlyError.message(
+            e,
+            AppLocalizations.of(context),
+            context: ErrorMessageContext.storyDetail,
+          );
         });
       }
     }

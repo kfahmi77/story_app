@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../common/app_localizations.dart';
+import '../../common/user_friendly_error.dart';
 
 import '../../common/result_state.dart';
 import '../../data/api/api_service.dart';
@@ -93,7 +94,11 @@ class _StoryListPageState extends State<StoryListPage> {
       if (mounted) {
         setState(() {
           _state = _stories.isEmpty ? ResultState.error : ResultState.success;
-          _errorMessage = e.toString().replaceFirst('Exception: ', '');
+          _errorMessage = UserFriendlyError.message(
+            e,
+            AppLocalizations.of(context),
+            context: ErrorMessageContext.storyList,
+          );
         });
       }
     }

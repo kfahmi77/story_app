@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../common/app_localizations.dart';
 import '../../common/result_state.dart';
+import '../../common/user_friendly_error.dart';
 import '../../data/api/api_service.dart';
 import '../../data/repository/auth_repository.dart';
 
@@ -55,7 +56,13 @@ class _AddStoryPageState extends State<AddStoryPage> {
         final l10n = AppLocalizations.of(context);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('${l10n.failedPickImage}: $e'),
+            content: Text(
+              UserFriendlyError.message(
+                e,
+                l10n,
+                context: ErrorMessageContext.imagePicker,
+              ),
+            ),
             behavior: SnackBarBehavior.floating,
           ),
         );
@@ -119,7 +126,11 @@ class _AddStoryPageState extends State<AddStoryPage> {
       if (mounted) {
         setState(() {
           _state = ResultState.error;
-          _errorMessage = e.toString().replaceFirst('Exception: ', '');
+          _errorMessage = UserFriendlyError.message(
+            e,
+            AppLocalizations.of(context),
+            context: ErrorMessageContext.addStory,
+          );
         });
       }
     }
