@@ -11,7 +11,7 @@ import '../widgets/story_card.dart';
 
 class StoryListPage extends StatefulWidget {
   final void Function(String storyId) onStoryTapped;
-  final VoidCallback onAddStory;
+  final Future<bool?> Function() onAddStory;
   final VoidCallback onLogout;
 
   const StoryListPage({
@@ -51,8 +51,15 @@ class _StoryListPageState extends State<StoryListPage> {
   }
 
   void _onScroll() {
-    if (_scrollController.position.pixels >=
-            _scrollController.position.maxScrollExtent - 200 &&
+    if (!_scrollController.hasClients) return;
+
+    final position = _scrollController.position;
+
+    // Ignore top overscroll so pull-to-refresh doesn't accidentally trigger
+    // the pagination loader.
+    if (position.pixels < 0) return;
+
+    if (position.extentAfter <= 200 &&
         _state != ResultState.loading &&
         _hasMore) {
       _fetchStories();
@@ -115,6 +122,7 @@ class _StoryListPageState extends State<StoryListPage> {
       body: RefreshIndicator(
         onRefresh: _refresh,
         color: const Color(0xFF4F46E5),
+        triggerMode: RefreshIndicatorTriggerMode.anywhere,
         edgeOffset: 120.0,
         child: CustomScrollView(
           controller: _scrollController,
@@ -135,6 +143,7 @@ class _StoryListPageState extends State<StoryListPage> {
                   style: GoogleFonts.poppins(
                     fontWeight: FontWeight.w700,
                     letterSpacing: 0.5,
+                    color: Colors.white,
                   ),
                 ),
                 background: Stack(
@@ -178,7 +187,12 @@ class _StoryListPageState extends State<StoryListPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: widget.onAddStory,
+        onPressed: () async {
+          final isStoryUploaded = await widget.onAddStory();
+          if (isStoryUploaded == true && mounted) {
+            await _refresh();
+          }
+        },
         backgroundColor: const Color(0xFF4F46E5),
         foregroundColor: Colors.white,
         elevation: 4,

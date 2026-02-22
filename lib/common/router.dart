@@ -43,14 +43,14 @@ GoRouter createRouter({required AuthRepository authRepo}) {
         path: '/stories',
         builder: (context, state) => StoryListPage(
           onStoryTapped: (id) => context.push('/stories/$id'),
-          onAddStory: () => context.push('/stories/add'),
+          onAddStory: () => context.push<bool>('/stories/add'),
           onLogout: () => context.go('/login'),
         ),
         routes: [
           GoRoute(
             path: 'add',
             builder: (context, state) =>
-                AddStoryPage(onStoryUploaded: () => context.go('/stories')),
+                AddStoryPage(onStoryUploaded: () => context.pop(true)),
           ),
           GoRoute(
             path: ':id',
